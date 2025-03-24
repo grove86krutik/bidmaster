@@ -11,7 +11,6 @@ export default function Welcome() {
                 <div className='flex justify-between items-center mb-4'>
                     <div className='flex space-x-4'>
                         <a href={route('admin.auction.index')} className='inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]'>Auctions</a>
-                        <a href={route('admin.seller.index')} className='inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]'>Sellers</a>
                     </div>
                     <Link
                         href={route('admin.logout')}
@@ -26,7 +25,7 @@ export default function Welcome() {
                 <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
                     <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row">
                         <div className="flex-1 rounded-br-lg rounded-bl-lg bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-tl-lg lg:rounded-br-none lg:p-20 dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]">
-                            <h1 className='text-center'>Welcome to Admin Panel</h1>
+                            <h1 className='text-center'>Welcome to Seller Panel</h1>
                         </div>
                     </main>
                 </div>

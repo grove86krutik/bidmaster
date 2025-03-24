@@ -5,14 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Auction;
+use App\Models\Seller;
 use Inertia\Inertia;
-use App\Helpers\RedisHelper;
+use App\Services\RedisService;
 
 class AuctionController extends Controller
 {
+    protected $redisService;
+
+    public function __construct(RedisService $redisService)
+    {
+        $this->redisService = $redisService;
+    }
+
     public function index()
     {
-        if(!($auctions = RedisHelper::cacheGet('auction_list'))){
+        if(!($auctions = $this->redisService->cacheGet('auction_list'))){
             $auctions = Auction::latest()->get()->map(function ($auction) {
                 return [
                     'id' => $auction->id,
@@ -21,7 +29,7 @@ class AuctionController extends Controller
                     'created_at' => $auction->created_at->diffForHumans()
                 ];
             });
-            RedisHelper::cacheSet('auction_list', $auctions, 60);
+            $this->redisService->cacheSet('auction_list', $auctions, 60);
         }
         
         return Inertia::render('admin/auction/index', [
@@ -31,7 +39,10 @@ class AuctionController extends Controller
 
     public function create()
     {
-        return Inertia::render('admin/auction/create');
+        $sellers = Seller::all(['id', 'name']);
+        return Inertia::render('admin/auction/create', [
+            'sellers' => $sellers
+        ]);
     }
 
     public function store(Request $request)
@@ -64,6 +75,7 @@ class AuctionController extends Controller
     public function destroy(Auction $auction)
     {
         $auction->delete();
+        $this->redisService->cacheForget('auction_list');
         return redirect()->route('admin.auction.index');
     }
 }

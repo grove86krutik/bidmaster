@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Bind RedisService to the container
+        $this->app->bind('App\Services\RedisService', function () {
+            return new \App\Services\RedisService();
+        });
     }
 
     /**
